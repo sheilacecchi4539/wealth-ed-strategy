@@ -105,34 +105,96 @@ body {
   animation: pulseLine 2s ease infinite;
 }
 
-/* ─── STICKY NAV ────────────────────────────────── */
-.sticky-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(0,48,97,0.97);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  padding: 0 8vw; display: flex; gap: 0; overflow-x: auto;
+/* ─── LEFT RAIL NAV ─────────────────────────────── */
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+.left-rail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 220px;
+  height: 100vh;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+  z-index: 100;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  overflow-y: auto;
   scrollbar-width: none;
 }
-.sticky-nav::-webkit-scrollbar { display: none; }
-.nav-tab {
-  font-family: 'DM Mono', monospace; font-size: 0.66rem;
-  letter-spacing: 0.11em; text-transform: uppercase;
-  color: rgba(255,255,255,0.42); padding: 18px 18px;
-  cursor: pointer; border: none; border-bottom: 2px solid transparent;
-  white-space: nowrap; background: none;
-  transition: color 0.2s ease, border-color 0.2s ease;
+.left-rail::-webkit-scrollbar { display: none; }
+
+.rail-wordmark {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.08em;
+  padding: 0 28px 32px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 24px;
+  line-height: 1.5;
 }
-.nav-tab:hover { color: rgba(255,255,255,0.78); }
-.nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+.nav-tab {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.38);
+  padding: 11px 28px;
+  cursor: pointer;
+  border: none;
+  border-left: 2px solid transparent;
+  white-space: nowrap;
+  background: none;
+  text-align: left;
+  width: 100%;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-tab:hover {
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.04);
+}
+.nav-tab.active {
+  color: var(--gold);
+  border-left-color: var(--gold);
+  background: rgba(227,156,28,0.06);
+}
+.nav-tab .tab-num {
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+.nav-tab.active .tab-num { color: var(--gold); opacity: 0.6; }
+
+.main-content {
+  margin-left: 220px;
+  flex: 1;
+  min-width: 0;
+}
 
 /* ─── SECTIONS ──────────────────────────────────── */
 .section {
-  padding: 96px 8vw;
+  padding: 96px 7vw;
   opacity: 0; transform: translateY(28px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 .section.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RAIL HIDDEN ON MOBILE ─────────────────────── */
+@media (max-width: 860px) {
+  .left-rail { display: none; }
+  .main-content { margin-left: 0; }
+  .section { padding: 72px 6vw; }
+}
 
 .section-eyebrow {
   font-family: 'DM Mono', monospace; font-size: 0.66rem;
@@ -152,7 +214,7 @@ body {
 .section-divider {
   height: 1px;
   background: linear-gradient(to right, transparent, var(--border), transparent);
-  margin: 0 8vw;
+  margin: 0 7vw;
 }
 
 /* ─── CALLOUT QUOTE ─────────────────────────────── */
@@ -544,18 +606,21 @@ footer .foot-note  { font-family: 'DM Mono', monospace; font-size: 0.6rem; color
   </div>
 </section>
 
-<!-- STICKY NAV -->
-<nav class="sticky-nav" id="main-nav">
-  <button class="nav-tab active" data-target="situation">Situation</button>
-  <button class="nav-tab" data-target="audience">Audience</button>
-  <button class="nav-tab" data-target="competitive">Competitive</button>
-  <button class="nav-tab" data-target="swot">SWOT</button>
-  <button class="nav-tab" data-target="architecture">Architecture</button>
-  <button class="nav-tab" data-target="global">Global</button>
-  <button class="nav-tab" data-target="measurement">Measurement</button>
-  <button class="nav-tab" data-target="operating">Operating Model</button>
-  <button class="nav-tab" data-target="roadmap">Roadmap</button>
+<!-- LEFT RAIL NAV -->
+<div class="page-layout">
+<nav class="left-rail" id="main-nav">
+  <div class="rail-wordmark">Digital Insights<br>&amp; Web Strategy</div>
+  <button class="nav-tab active" data-target="situation"><span class="tab-num">01</span>Situation</button>
+  <button class="nav-tab" data-target="audience"><span class="tab-num">02</span>Audience</button>
+  <button class="nav-tab" data-target="competitive"><span class="tab-num">03</span>Competitive</button>
+  <button class="nav-tab" data-target="swot"><span class="tab-num">04</span>SWOT</button>
+  <button class="nav-tab" data-target="architecture"><span class="tab-num">05</span>Architecture</button>
+  <button class="nav-tab" data-target="global"><span class="tab-num">06</span>Global</button>
+  <button class="nav-tab" data-target="measurement"><span class="tab-num">07</span>Measurement</button>
+  <button class="nav-tab" data-target="operating"><span class="tab-num">08</span>Operating Model</button>
+  <button class="nav-tab" data-target="roadmap"><span class="tab-num">09</span>Roadmap</button>
 </nav>
+<div class="main-content">
 
 
 <!-- ══════════ 01 SITUATION ══════════ -->
@@ -1129,6 +1194,9 @@ footer .foot-note  { font-family: 'DM Mono', monospace; font-size: 0.6rem; color
   </div>
 </section>
 
+</div><!-- end main-content -->
+</div><!-- end page-layout -->
+
 <footer>
   <div class="wordmark">Digital Insights &amp; Web Strategy · Global Asset Management</div>
   <div class="foot-note">Internal Strategic Brief · Confidential · 2026</div>
@@ -1159,8 +1227,7 @@ sections.forEach(s => revealObserver.observe(s));
 
 // Active nav on scroll — scroll position based for reliability
 function updateActiveNav() {
-  const navHeight = 68;
-  const scrollY = window.scrollY + navHeight + 40;
+  const scrollY = window.scrollY + 120;
   let current = sectionIds[0];
   sectionIds.forEach(id => {
     const el = document.getElementById(id);
@@ -1177,7 +1244,7 @@ navTabs.forEach(tab => {
   tab.addEventListener('click', () => {
     const target = document.getElementById(tab.dataset.target);
     if (target) {
-      const top = target.getBoundingClientRect().top + window.scrollY - 68;
+      const top = target.getBoundingClientRect().top + window.scrollY - 40;
       window.scrollTo({ top, behavior: 'smooth' });
     }
   });
